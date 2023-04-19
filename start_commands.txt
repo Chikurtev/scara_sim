@@ -1,0 +1,18 @@
+To see the robot in rviz:
+
+roslaunch scara_description scara_rviz.launch
+
+To generate the robot in gazebo:
+
+roslaunch scara_gazebo scara_world.launch
+
+To tune the PIDs 
+
+rosrun rqt_gui rqt_gui 
+
+To start the Opencv object detection
+
+rosrun cv_basics webcam_sub.py
+rosrun cv_basics knn_detection.py
+
+table positions: 0.0; 1.57; 3,14; 4,72;
