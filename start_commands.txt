@@ -10,9 +10,21 @@ To tune the PIDs
 
 rosrun rqt_gui rqt_gui 
 
+To run the Control
+
+roslaunch scara_control scara_control.launch
+
 To start the Opencv object detection
 
 rosrun cv_basics webcam_sub.py
 rosrun cv_basics knn_detection.py
 
+To start kinematics control
+roslaunch scara_command command.launch 
 table positions: 0.0; 1.57; 3,14; 4,72;
+
+table cartesian positions
+table center x = 0.5
+table pad to center 0.16
+
+cartesian service: rosservice call /set_cartesian_pos_ref
