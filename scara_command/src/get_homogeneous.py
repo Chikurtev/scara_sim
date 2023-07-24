@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from scara_command.srv import ScaraHomoMatrix, ScaraHomoMatrixResponse
 import numpy
@@ -18,12 +18,12 @@ def homogeneous_A(a1, alph1, d1, theta1):
 
 def handle_homogeneous_matrix(req):
     ##_---------------------- DH Parameters----------------------------------------
-    a1 = .425
+    a1 = .35
     alph1 = 0
-    d1 = .55
+    d1 = .36
     theta1 = req.q1
 
-    a2 = .345
+    a2 = .30
     alph2 = 3.14
     d2 = 0
     theta2 = req.q2

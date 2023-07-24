@@ -19,8 +19,8 @@ def acquire_joints():
         joint3_properties = joints_properties("joint3")
         q3 = joint3_properties.position[0]
 
-    except rospy.ServiceException, e:
-        print "Service call failed: %s"%e
+    except rospy.ServiceException as e:
+        print ("Service call failed: %s"%e)
 
     return q1, q2, q3
 
@@ -32,21 +32,21 @@ def acquire_coordinates():
         coordinates_gene = rospy.ServiceProxy('gazebo/get_link_state', GetLinkState)
         coordinates = coordinates_gene("link3", "world")
 	# Position
-	x = coordinates.link_state.pose.position.x
-	y = coordinates.link_state.pose.position.y
-	z = coordinates.link_state.pose.position.z
+        x = coordinates.link_state.pose.position.x
+        y = coordinates.link_state.pose.position.y
+        z = coordinates.link_state.pose.position.z
 	# Orientation (Quaternion)
-	qt1 = coordinates.link_state.pose.orientation.x
-	qt2 = coordinates.link_state.pose.orientation.y
-	qt3 = coordinates.link_state.pose.orientation.z
-	qt0 = coordinates.link_state.pose.orientation.w
+        qt1 = coordinates.link_state.pose.orientation.x
+        qt2 = coordinates.link_state.pose.orientation.y
+        qt3 = coordinates.link_state.pose.orientation.z
+        qt0 = coordinates.link_state.pose.orientation.w
 	# convert to radian
-	phi = math.atan2(2*(qt0*qt1 + qt2*qt3), 1-2*(qt1*qt1 + qt2*qt2))
-	theta = math.asin(2*(qt0*qt2 - qt3*qt1))
-	psi = math.atan2(2*(qt0*qt3 + qt1*qt2), 1-2*(qt2*qt2 + qt3*qt3))
-	
-    except rospy.ServiceException, e:
-        print "Service call failed: %s"%e
+        phi = math.atan2(2*(qt0*qt1 + qt2*qt3), 1-2*(qt1*qt1 + qt2*qt2))
+        theta = math.asin(2*(qt0*qt2 - qt3*qt1))
+        psi = math.atan2(2*(qt0*qt3 + qt1*qt2), 1-2*(qt2*qt2 + qt3*qt3))
+    
+    except rospy.ServiceException as e:
+        print ("Service call failed: %s"%e)
 
     return x, y, z, phi, theta, psi
 

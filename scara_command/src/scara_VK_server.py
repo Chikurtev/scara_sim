@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from scara_command.srv import ScaraVelFK, ScaraVelFKResponse, ScaraHomoMatrix, ScaraHomoMatrixResponse, ScaraVelIK, ScaraVelIKResponse
 import rospy
@@ -10,7 +10,7 @@ from helper import ma2np
 
 # Handle joints velocity -> cartesian velocity...
 def handle_velocity_forward_kinematics(req):
-    print "Received Forward Request"
+    print ("Received Forward Request")
     q1_dot = req.q1_dot
     q2_dot = req.q2_dot
     q3_dot = req.q3_dot
@@ -29,8 +29,8 @@ def handle_velocity_forward_kinematics(req):
         A2 = ma2np(findAs.A2)
         A3 = ma2np(findAs.A3)
 
-    except rospy.ServiceException, e:
-        print "Service call failed: %s"%e
+    except rospy.ServiceException as e:
+        print ("Service call failed: %s"%e)
     
     z0 = np.array([[0],[0],[1]])
     z1 = np.array([[0],[0],[1]])
@@ -47,7 +47,7 @@ def handle_velocity_forward_kinematics(req):
     J = np.vstack((Jv,Jw))
 
     V = np.dot(J,qdot)
-    print V
+    print (V)
     Vx = V[0]
     Vy = V[1]
     Vz = V[2]
@@ -55,13 +55,13 @@ def handle_velocity_forward_kinematics(req):
     Wy = V[4]
     Wz = V[5]
 
-    print "Completed Forward Kin"
+    print ("Completed Forward Kin")
     return ScaraVelFKResponse(Vx, Vy, Vz, Wx, Wy, Wz)
 
 
 # Handle cartesian velocity -> joints velocity
 def handle_velocity_inverse_kinematics(req):
-    print "Received Inverse Request"
+    print ("Received Inverse Request")
     Vx = req.Vx
     Vy = req.Vy
     Vz = req.Vz
@@ -84,8 +84,8 @@ def handle_velocity_inverse_kinematics(req):
         A2 = ma2np(findAs.A2)
         A3 = ma2np(findAs.A3)
 
-    except rospy.ServiceException, e:
-        print "Service call failed: %s" % e
+    except rospy.ServiceException as e:
+        print ("Service call failed: %s" % e)
 
     A13 = np.dot(A1,np.dot(A2,A3))
     z0 = np.array([[0], [0], [1]])
@@ -103,12 +103,12 @@ def handle_velocity_inverse_kinematics(req):
     #Jpinv = np.dot(np.linalg.inv(JxJt),J.T)
     Jinv = np.linalg.inv(Jv)
     q = np.dot(Jinv, V)
-    print q
+    print (q)
     q1_dot = q[0]
     q2_dot = q[1]
     q3_dot = q[2]
 
-    print "Completed Inverse Kin"
+    print ("Completed Inverse Kin")
     return ScaraVelIKResponse(True, q1_dot, q2_dot, q3_dot)
 
 
@@ -117,7 +117,7 @@ def scara_VK_server():
     rospy.init_node('vel_kin_server')
     s1 = rospy.Service('vel_for_kin', ScaraVelFK, handle_velocity_forward_kinematics)
     s2 = rospy.Service('vel_inv_kin', ScaraVelIK, handle_velocity_inverse_kinematics)
-    print "Ready for Vel Kin 7"
+    print ("Ready for Vel Kin 7")
     
     rospy.spin()
 

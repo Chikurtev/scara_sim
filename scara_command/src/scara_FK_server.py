@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from scara_command.srv import ScaraKinFK, ScaraKinFKResponse, ScaraHomoMatrix
 from math import atan2, sqrt, pow
@@ -14,8 +14,8 @@ def handle_forward_kinematics(req):
     try:
         get_homo_matrix = rospy.ServiceProxy('homogeneous_matrix', ScaraHomoMatrix)
         homo_matrix = get_homo_matrix(req.q1, req.q2, req.q3)
-    except rospy.ServiceException, e:
-        print "Service call failed: %s"%e
+    except rospy.ServiceException as e:
+        print ("Service call failed: %s"%e)
     
     A1 = ma2np(homo_matrix.A1)
     A2 = ma2np(homo_matrix.A2)

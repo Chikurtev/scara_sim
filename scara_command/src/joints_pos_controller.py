@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from scara_command.srv import SetJointRef, SetJointRefResponse,\
                               SetCartesianPos, SetCartesianPosResponse,\
@@ -31,8 +31,8 @@ def handle_cartesian_ref(req):
     try:
         inv_kinematic = rospy.ServiceProxy('inv_kin', ScaraKinIK)
         res = inv_kinematic(req.x, req.y, req.z, 0, 0, 0)
-    except rospy.ServiceException, e:
-        print "Service call failed: %s"%e
+    except rospy.ServiceException as e:
+        print ("Service call failed: %s"%e)
 
     if res.success:
         # Apply joint effort using controller
@@ -41,7 +41,7 @@ def handle_cartesian_ref(req):
         pub3.publish(res.q3)
         return SetCartesianPosResponse(True)
     
-    print "IK failed, the coordinate provided may be invalid."
+    print ("IK failed, the coordinate provided may be invalid.")
     return SetCartesianPosResponse(False)
 
 

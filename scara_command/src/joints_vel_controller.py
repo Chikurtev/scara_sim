@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from scara_command.srv import SetJointRef, SetJointRefResponse,\
                               SetCartesianVel, SetCartesianVelResponse,\
@@ -40,8 +40,8 @@ def handle_cartesian_ref(req):
             res = vel_inv_kinematic(joints[0], joints[1], joints[2],\
                                     req.Vx, req.Vy, req.Vz, req.Wx,\
                                     req.Wy, req.Wz)
-        except rospy.ServiceException, e:
-            print "Service call failed: %s"%e
+        except rospy.ServiceException as e:
+            print ("Service call failed: %s"%e)
 
         if res.success:
             # Apply joint effort using controller
@@ -55,9 +55,9 @@ def handle_cartesian_ref(req):
             break
     
     if flag: # If succeed
-        print "Velocity controllers work for 3 seconds"
+        print ("Velocity controllers work for 3 seconds")
     else: # If failed
-        print "Velocity IK failed, the velocity provided may be invalid."
+        print ("Velocity IK failed, the velocity provided may be invalid.")
 
     # Stop controlling
     pub1.publish(0)

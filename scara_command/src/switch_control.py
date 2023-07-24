@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 from controller_manager_msgs.srv import SwitchController
@@ -28,11 +28,11 @@ def handle_switch(req):
                                       'joint2_velocity_controller',
                                       'joint3_velocity_controller'], 2)
         else:
-            print 'Input should be "p2v" or "v2p"'
+            print ('Input should be "p2v" or "v2p"')
             return SwitchControlResponse(False)
             
-    except rospy.ServiceException, e:
-        print "Service call failed: %s"%e
+    except rospy.ServiceException as e:
+        print ("Service call failed: %s"%e)
 
     return SwitchControlResponse(True)
 

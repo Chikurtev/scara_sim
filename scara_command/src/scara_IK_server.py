@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from math import sin, cos, acos, atan2
 from scara_command.srv import ScaraKinIK, ScaraKinIKResponse
@@ -7,9 +7,9 @@ from scara_command.srv import ScaraKinIK, ScaraKinIKResponse
 
 def handle_IK(req):
     # Robot dimension
-    a1 = 0.55
-    a2 = 0.425
-    a3 = 0.345
+    a1 = 0.36
+    a2 = 0.35
+    a3 = 0.30
     a4 = 0.11
 
     # Input Coordinate
@@ -23,7 +23,7 @@ def handle_IK(req):
         # calculate joint 3
         q3 = a1 - a4 - z
         if not (0 <= q3 <= 0.3):
-            print "IK failed, coordinate z is not reachable."
+            print ("IK failed, coordinate z is not reachable.")
             return ScaraKinIKResponse(False, 0, 0, 0)
         # calculate joint 2
         q2 = acos(round(-(a2**2 + a3**2 - x**2 - y**2) / (2*a2*a3),3))
@@ -48,8 +48,8 @@ def handle_IK(req):
         else:
             q1 = q1_1
             q2 = q2_1
-    except ValueError, e:
-        print "IK failed, the coordinate x, y provided may be invalid: %s"%e
+    except ValueError as e:
+        print ("IK failed, the coordinate x, y provided may be invalid: %s"%e)
         return ScaraKinIKResponse(False, 0, 0, 0)
 
     return ScaraKinIKResponse(True, q1, q2, q3)
