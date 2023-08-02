@@ -43,9 +43,7 @@ Environment: Ubuntu 20.04 + ROS Noetic
 
 To install gazebo controllers:
 
-`sudo apt-get install ros-noetic-joint-state-controller`
-`sudo apt-get install ros-noetic-effort-controllers`
-`sudo apt-get install ros-noetic-position-controllers`
+sudo apt-get install ros-noetic-joint-state-controller ros-noetic-effort-controllers ros-noetic-position-controllers
 
 Build Instruction
 
